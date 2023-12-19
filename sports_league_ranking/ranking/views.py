@@ -51,6 +51,10 @@ def destroy(request, id):
     to_be_deleted_game.delete()
     return redirect("/show")
 
+def display_rankings(request):
+    ranking_list = Ranking.objects.all().order_by('rank')
+    return render(request, "ranking_list.html", {'ranking_list': ranking_list})
+
 
 def save_new_product_from_csv(file_path):
     # do try catch accordingly
