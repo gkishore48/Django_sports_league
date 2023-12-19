@@ -2,28 +2,63 @@ from django.db import models
 
 
 # Create your models here.
+class Team(models.Model):
+    name = models.CharField(max_length=255)
 
-class Game(models.Model):
-    team1_name = models.CharField(max_length=100)
-    team2_name = models.CharField(max_length=100)
-    team1_score = models.IntegerField()
-    team2_score = models.IntegerField()
+    def __str__(self):
+        return self.name
+
+
+class Games(models.Model):
+    team_1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='games_as_team_1')
+    team_2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='games_as_team_2')
+    team_1_score = models.IntegerField()
+    team_2_score = models.IntegerField()
 
     class Meta:
         verbose_name_plural = "games"
 
-    def __str__(self):
-        return str(self.team1_name) + " vs " + str(self.team2_name)
+    # def __str__(self):
+    #     return str(self.team_1) + " vs " + str(self.team_2)
 
 
 class Ranking(models.Model):
-    ranking = models.IntegerField()
-    team_name = models.CharField(max_length=100)
-    points = models.IntegerField()
+    team = models.OneToOneField(Team, on_delete=models.CASCADE, related_name='ranking')
+    points = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "rankings"
-        ordering = ('ranking',)
 
     def __str__(self):
-        return self.team_name
+        return self.team
+
+    @classmethod
+    def calculate_rankings(cls):
+        teams = Team.objects.all()
+
+        for team in teams:
+            ranking, created = cls.objects.get_or_create(team=team)
+            ranking.points = 0
+
+        games = Games.objects.all()
+
+        for game in games:
+            team_1_ranking = Ranking.objects.get(team=game.team_1)
+            team_2_ranking = Ranking.objects.get(team=game.team_2)
+
+            if game.team_1_score > game.team_2_score:
+                team_1_ranking.points += 3
+            elif game.team_1_score < game.team_2_score:
+                team_2_ranking.points += 3
+            else:
+                team_1_ranking.points += 1
+                team_2_ranking.points += 1
+
+        # Sort rankings by points and then by team name
+        sorted_rankings = cls.objects.all().order_by('-points', 'team__name')
+
+        rank = 1
+        for ranking in sorted_rankings:
+            ranking.rank = rank
+            ranking.save()
+            rank += 1

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <form method="POST" action="/game">
+        {% csrf_token %}
+        <div>
+            <br>
+            <p>
+                <h3>Enter Game details</h3>
+            </p>
+            <div>
+                <p>Team 1:</p>{{ form.team_1 }}
+            </div>
+            <div>
+                <p>Team 2:</p>{{ form.team_2 }}
+            </div>
+            <div>
+                <p>Team 1 score:</p>{{ form.team_1_score }}
+            </div>
+            <div>
+                <p>Team 2 score:</p>{{ form.team_2_score }}
+            </div>
+            <div>
+                <br>
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
