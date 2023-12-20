@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game details</title>
+    <title>Ranking details</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.0/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -16,7 +16,10 @@
     <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 </head>
 
-<body>
+<body class="sport_league_ranking__body">
+<section class="section__ranking_list container mt-4 p-3">
+        <h3 class="mb-4">Rankings</h3>
+        <div class="div__ranking_list p-4">
     <table id="table__ranking_list">
         <thead>
             <tr>
@@ -35,8 +38,10 @@
             {% endfor %}
         </tbody>
     </table>
-    <br>
-    <br>
+        </div>
+        <button class="btn btn-warning mt-3 btn-add-record"><a style="color:black;" href="{% url 'show_results' %}">Show
+                results</a></button>
+    </section>
     <script>
         $("#table__ranking_list").DataTable()
     </script>

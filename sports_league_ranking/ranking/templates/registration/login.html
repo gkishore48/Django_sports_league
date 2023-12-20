@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    {% load widget_tweaks %}
+</head>
+<body>
+    <h2>User Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.username.label_tag }}
+        {% render_field form.username class+="form-control" %}
+        <br>
+
+        {{ form.password.label_tag }}
+        {% render_field form.password class+="form-control" %}
+        <br>
+
+        <button type="submit">Login</button>
+        <button type="submit"><a href="{% url 'register' %}">Register</a></button>
+    </form>
+</body>
+</html>

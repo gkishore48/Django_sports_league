@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game details</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.0/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -16,38 +16,118 @@
     <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 </head>
 
-<body>
-    <table id="table__team_list">
-        <thead>
-            <tr>
-                <th>Team 1</th>
-                <th>Team 2</th>
-                <th>Team 1 score</th>
-                <th>Team 2 score</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in games %}
-            <tr>
-                <td>{{ game.team_1 }}</td>
-                <td>{{game.team_2}}</td>
-                <td>{{game.team_1_score}}</td>
-                <td>{{game.team_2_score}}</td>
-                <td>
-                    <a href="/edit/{{ game.id }}">Edit</a>
-                    <a href="/delete/{{game.id}}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <button><a style="color:black;" href="/game">Add New Record</a></button>
+<body class="sport_league__body">
+    <scetion class="user-info">
+        <span>Welcome {{ request.user.username }}</span>
+        <button class="btn btn-primary mt-3 btn-add-record"><a href="/logout">Log out</a></button>
+    </scetion>
+    <section class="section__game_list container mt-4 p-3">
+        <h3 class="mb-4">Sports League</h3>
+        <div class="section__game_list_table p-5">
+            <table id="table__game_list">
+                <thead>
+                    <tr>
+                        <th>Team 1</th>
+                        <th>Team 2</th>
+                        <th>Team 1 score</th>
+                        <th>Team 2 score</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr>
+                        <td>{{ game.team_1 }}</td>
+                        <td>{{game.team_2}}</td>
+                        <td>{{game.team_1_score}}</td>
+                        <td>{{game.team_2_score}}</td>
+                        <td>
+                            <button class="btn btn-link btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="editGame({{ game.id }})">Edit</button>
+<!--                            <a href="/edit/{{ game.id }}" data-toggle="modal" data-target="#myModal"-->
+<!--                onclick="editGame({{ game.id }})">Edit</a>-->
+                            <button class="btn btn-link btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="editGame({{ game.id }})">Delete</button>
+<!--                            <a href="/delete/{{game.id}}">Delete</a>-->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="section__buttons">
+            <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="addNewRecord()">Add new record</button>
+            <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="uploadCSV()">Upload
+                csv</button>
+            <button class="btn btn-warning mt-3 btn-add-record"><a style="color:black;"
+                    href="{% url 'ranking_list' %}">Show
+                    rankings</a></button>
+        </div>
+    </section>
+    <!-- The Modal Form -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Modal body..
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <script>
-        $("#table__team_list").DataTable()
+        $("#table__game_list").DataTable({
+            responsive: true,
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+        })
+
+        function addNewRecord() {
+            $.ajax({
+                url: "/game",
+                type: 'GET',
+                success: function (data) {
+                    $(".modal-title").html("Add New game")
+                    $(".modal-body").html(data)
+                }
+            });
+        }
+
+        function uploadCSV() {
+            $.ajax({
+                url: "/upload",
+                type: 'GET',
+                success: function (data) {
+                    $(".modal-title").html("Upload CSV")
+                    $(".modal-body").html(data)
+                }
+            });
+        }
+        function editGame(game_id) {
+            $.ajax({
+                url: "/edit/"+game_id,
+                type: 'GET',
+                success: function (data) {
+                    $(".modal-title").html("Edit game")
+                    $(".modal-body").html(data)
+                }
+            });
+        }
+
     </script>
 </body>
-
 </html>

@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sport_league__body,
+.sport_league_ranking__body {
+  background-image: url('/static/images/sports_league_home.jpg');
+  background-position: center;
+  background-repeat: none;
+  width: 100vw;
+  height: 100vh;
+  overflow: none;
+}
+
+.section__game_list,
+.section__ranking_list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+.section__game_list h3,
+.section__ranking_list h3 {
+  color: white;
+}
+
+.section__game_list_table,
+.div__ranking_list {
+  background-color: rgb(231, 231, 231, 0.7) !important;
+  border-radius: 5px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #a7a7a7 !important;
+  border-radius: 3px !important;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 4px 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.btn-add-record a:hover {
+  text-decoration: none !important;
+}
+
+.section__buttons {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-backdrop {
+  background-color: rgb(0, 0, 0, 0.8) !important;
+}
+
+.user-info {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  background-color: #ffc107;
+  border-color: #ffc107;
+  border-radius: 5px;
+  min-width: 150px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info a {
+  text-decoration: none;
+  color: white;
+}

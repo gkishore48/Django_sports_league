@@ -18,8 +18,8 @@ class Games(models.Model):
     class Meta:
         verbose_name_plural = "games"
 
-    # def __str__(self):
-    #     return str(self.team_1) + " vs " + str(self.team_2)
+    def __str__(self):
+        return str(self.team_1.name) + " " + str(self.team_1_score) + " - " + str(self.team_2.name) + " " + str(self.team_2_score)
 
 
 class Ranking(models.Model):
@@ -32,7 +32,7 @@ class Ranking(models.Model):
         ordering = ('rank',)
 
     def __str__(self):
-        return self.team
+        return self.team.name
 
     @classmethod
     def calculate_rankings(cls):
