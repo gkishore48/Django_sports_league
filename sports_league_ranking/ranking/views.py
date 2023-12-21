@@ -154,7 +154,7 @@ def upload_csv(request):
                 return render(request, 'csv_upload.html', {'form': form, 'messages': messages})
             handle_uploaded_file(csv_file)
             Ranking.calculate_rankings()
-            return redirect('/')
+            return redirect('/ranking_list')
 
     except Exception as e:
         messages.error(request, f"Unable to upload file. Error: {e}")

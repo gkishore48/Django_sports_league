@@ -36,7 +36,7 @@ class Ranking(models.Model):
 
     @classmethod
     def calculate_rankings(cls):
-        cls.objects.all().update(points=0, rank=0)
+        cls.objects.all().delete()
         games = Games.objects.all()
         for game in games:
             team_1_ranking, created = cls.objects.get_or_create(team=game.team_1)

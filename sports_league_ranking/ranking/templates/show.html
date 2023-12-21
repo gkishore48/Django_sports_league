@@ -17,80 +17,78 @@
 </head>
 
 <body class="sport_league__body">
-    <scetion class="user-info">
-        <span>Welcome {{ request.user.username }}</span>
-        <button class="btn btn-primary mt-3 btn-add-record"><a href="/logout">Log out</a></button>
-    </scetion>
-    <section class="section__game_list container mt-4 p-3">
-        <h3 class="mb-4">Sports League</h3>
-        <div class="section__game_list_table p-5">
-            <table id="table__game_list">
-                <thead>
-                    <tr>
-                        <th>Team 1</th>
-                        <th>Team 2</th>
-                        <th>Team 1 score</th>
-                        <th>Team 2 score</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for game in games %}
-                    <tr>
-                        <td>{{ game.team_1 }}</td>
-                        <td>{{game.team_2}}</td>
-                        <td>{{game.team_1_score}}</td>
-                        <td>{{game.team_2_score}}</td>
-                        <td>
-                            <button class="btn btn-link btn-add-record" data-toggle="modal" data-target="#myModal"
-                onclick="editGame({{ game.id }})">Edit</button>
-<!--                            <a href="/edit/{{ game.id }}" data-toggle="modal" data-target="#myModal"-->
-<!--                onclick="editGame({{ game.id }})">Edit</a>-->
-                            <button class="btn btn-link btn-add-record" data-toggle="modal" data-target="#myModal"
-                onclick="editGame({{ game.id }})">Delete</button>
-<!--                            <a href="/delete/{{game.id}}">Delete</a>-->
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="section__buttons">
-            <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
-                onclick="addNewRecord()">Add new record</button>
-            <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
-                onclick="uploadCSV()">Upload
-                csv</button>
-            <button class="btn btn-warning mt-3 btn-add-record"><a style="color:black;"
-                    href="{% url 'ranking_list' %}">Show
-                    rankings</a></button>
-        </div>
-    </section>
-    <!-- The Modal Form -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<scetion class="user-info">
+    <span>Welcome {{ request.user.username }}</span>
+    <button class="btn btn-primary mt-3 btn-add-record"><a href="/logout">Log out</a></button>
+</scetion>
+<section class="section__game_list container mt-4 p-3">
+    <h3 class="mb-4">Sports League</h3>
+    <div class="section__game_list_table p-5">
+        <table id="table__game_list">
+            <thead>
+            <tr>
+                <th>Team 1</th>
+                <th>Team 2</th>
+                <th>Team 1 score</th>
+                <th>Team 2 score</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in games %}
+            <tr>
+                <td>{{ game.team_1 }}</td>
+                <td>{{game.team_2}}</td>
+                <td>{{game.team_1_score}}</td>
+                <td>{{game.team_2_score}}</td>
+                <td>
+                    <button class="btn btn-link btn-add-record" data-toggle="modal" data-target="#myModal"
+                            onclick="editGame({{ game.id }})">Edit
+                    </button>
+                    <a href="/delete/{{game.id}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="section__buttons">
+        <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="addNewRecord()">Add new record
+        </button>
+        <button class="btn btn-warning mt-3 btn-add-record" data-toggle="modal" data-target="#myModal"
+                onclick="uploadCSV()">Upload csv
+        </button>
+        <button class="btn btn-warning mt-3 btn-add-record">
+            <a style="color:black;" href="{% url 'ranking_list' %}">Show rankings</a>
+        </button>
+    </div>
+</section>
+<!-- The Modal Form -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    Modal body..
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
-    <script>
+</div>
+<script>
         $("#table__game_list").DataTable({
             responsive: true,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
@@ -128,6 +126,7 @@
             });
         }
 
-    </script>
+
+</script>
 </body>
 </html>
